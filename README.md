@@ -44,4 +44,14 @@ _**P(θ|D) = P(D|θ)P(θ)/P(D)**_
 
 where _**D**_ is a collection of observed noisy point pairs _**{(x<sub>1</sub>, y<sub>1</sub>), (x<sub>2</sub>, y<sub>2</sub>), (x<sub>3</sub>, y<sub>3</sub>)}**_ as shown in Fig.1. In order to quantify the _posterior_ _**P(θ|D)**_, the problem now reduces to specify the _likelihood_ _**P(D|θ)**_ and _prior_ _**P(D)**_ as mentioned above, which is a 2-step process. Although, specifying both functions is non-trivial, in this simple experiment, we stay simple to keep this snippet with the simplest case.
 
-For the _likelihood_ function, by saying the noisy observations are _Gaussian_ distributed around the true model, it is then reasonable to assume that observations are likely to follow a _Gaussian_ distribution _given_ any known _**θ**_.
+For the _likelihood_ function, by saying the noisy observations are _Gaussian_ distributed around the true model, it is then reasonable to assume that observations are likely to follow a _Gaussian_ distribution _given_ any known _**θ**_. Thus for any single observed data point _**(x<sub>k</sub>, y<sub>k</sub>)**_, the _likelihood_ measures the probability of the model parameter _**θ**_ gives rise to this known data point. In short, given any _**θ**_, the probability of observing this particular point of tuple _**(x<sub>k</sub> , y<sub>k</sub>)**_ is:
+
+_**P(D|θ) = P((x<sub>k</sub>, y<sub>k</sub>)|θ)**_
+
+Observing data is always considered to be an [_**iid**_](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables) process, thus the joint _likelihood_ of any _**θ**_ gives rise to all the observations is simply a multiplication of all the individual _likelihood_:
+
+_**P(D|θ) = ∏<sub>i</sub>P((x<sub>i</sub>, y<sub>i</sub>)|θ)**_
+
+
+
+
