@@ -15,5 +15,6 @@ Showcase
 In the simplest case of _univariate linear regression_, the ultimate goal is to find out the true model with the highest confidence so that we can make confident predictions by using the model. Find out the true model and with quantified confidence can be achieved simultaneously through _Bayesian statistics_, which is appealing. Visually, _Bayesian statistics_ tries to figure out the true form of the unobserved linear model (linear parameters) in Fig.1 through few point observations.
 
 <img src="/img/0_data.png"> 
+
 _Fig.1 Sample coregionalized processes reconstruction from points in 1-dimension._
 
