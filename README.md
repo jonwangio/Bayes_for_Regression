@@ -1,4 +1,4 @@
-# Experiment on Bayesian Regression
+# Experiment on Bayesian Regression (for educational purpose)
 -------------------
 
 Short recap
@@ -19,20 +19,22 @@ In the simplest case of _univariate linear regression_, the ultimate goal is to 
 
 <img src="/img/0_data.png" width="340" heigth="290"> 
 
-_Fig.1 Sample coregionalized processes reconstruction from points in 1-dimension._
+_Fig.1 Linear regression rationale._
 
 Mathematically, _Bayesian statistics_ would quantify _θ<sub>1</sub>_ and _θ<sub>12</sub>_ for the model:
 
-_**y = θ<sub>1</sub> + θ<sub>2</sub>x**_
+_**M(x) = θ<sub>1</sub> + θ<sub>2</sub>x**_
 
 or in a vectorized form:
 
-_**Y = θ<sup>T</sup>X**_
+_**M(X) = θ<sup>T</sup>X**_
 
-where _**X**_ is _[1, x]<sup>T</sup>_ and _**θ**_ is _[θ<sub>1</sub>, θ<sub>2</sub>]<sup>T</sup>_.
+where _**X**_ is _[1, x]<sup>T</sup>_ and _**θ**_ is _[θ<sub>1</sub>, θ<sub>2</sub>]<sup>T</sup>_. Unfortunately, in most cases, we only have noisy observations _**Y**_ such as _**(y<sub>1</sub>, y<sub>2</sub>, ... , y<sub>n</sub>)**_ with preferable _Gaussian_ distributed noises around the true model, in the form of:
+
+_**M(X) = θ<sup>T</sup>X + ε**_
 
 According to the _Bayesian principle_, the inference of the model parameter can be achieved through:
 
 _**P(θ|D) = P(D|θ)P(θ)/P(D)**_
 
-where _**D**_ is a collection of observed point pairs _**{(x<sub>1</sub>, y<sub>1</sub>), (x<sub>2</sub>, y<sub>2</sub>), (x<sub>3</sub>, y<sub>3</sub>)}**_ as shown in Fig.1. In order to quantify the _posterior_ _**P(θ|D)**_, the problem now reduces to specify the _likelihood_ _**P(D|θ)**_ and _prior_ _**P(D)**_ as mentioned above.
+where _**D**_ is a collection of observed noisy point pairs _**{(x<sub>1</sub>, y<sub>1</sub>), (x<sub>2</sub>, y<sub>2</sub>), (x<sub>3</sub>, y<sub>3</sub>)}**_ as shown in Fig.1. In order to quantify the _posterior_ _**P(θ|D)**_, the problem now reduces to specify the _likelihood_ _**P(D|θ)**_ and _prior_ _**P(D)**_ as mentioned above. Although, specifying both functions is non-trivial, 
