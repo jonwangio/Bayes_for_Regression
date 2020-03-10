@@ -52,6 +52,10 @@ Observing data is always considered to be an [_**iid**_](https://en.wikipedia.or
 
 _**P(D|θ) = ∏<sub>i</sub>P((x<sub>i</sub>, y<sub>i</sub>)|θ)**_
 
+<img src="/img/1_likeli1.gif" width="600" heigth="500"> 
+
+_Fig.2 Likelihood wrt. observations._
+
 
 
 
