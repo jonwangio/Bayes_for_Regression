@@ -51,7 +51,7 @@ def linearF(x):
 def plotLikelihood(obs_x, obs_y, k, likelihood):
     # Observations
     plt.subplot(1,2,1)
-    plt.plot(obs_x,obs_y,'k.',obs_x[:k+1],obs_y[:k+1],'ro')
+    plt.plot(obs_x,obs_y,'k.',obs_x[k+1],obs_y[k+1],'ro')
     plt.plot(true_x,true_y,'g--')
     plt.xlim([-5.,5.])
     plt.ylim([-7.5,12.5])
@@ -89,9 +89,9 @@ T1,T2 = meshgrid(theta1, theta2) # grid of point
 
 # Loop over number of observations
 likelihood = 1
-for k in range(3):  #(len(obs_y)):
+for k in range(2):  #(len(obs_y)):
     prior = pri(T1,T2) 
-    likelihood *= likeli(T1, T2, obs_y[k], obs_x[k]) # evaluation of the function on the grid
+    likelihood = likeli(T1, T2, obs_y[k], obs_x[k]) # evaluation of the function on the grid
     posterior = prior*likelihood
 
 
