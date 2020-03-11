@@ -64,13 +64,13 @@ def likeli(theta1,theta2,obs_y,obs_x):  # It is a function of theta with known o
 ```
 where I chose a standard deviation of _**1**_ for this _Gaussian likelihood_ as I assume for the noise level. It shows my confidence interval that the observations should be in around the true linear model. This _likelihood_ is obviously a function wrt. _**θ**_ as the tuple _**(x<sub>k</sub> , y<sub>k</sub>)**_ is observed. More intuitively, if we observe one pair of _**(x<sub>k</sub> , y<sub>k</sub>)**_ as denoted red to the left of Fig.2, the above _likelihood_ is a function of _**θ**_ or _[θ<sub>1</sub> , θ<sub>2</sub>]<sup>T</sup>_, and can be plotted in a 2-dimensional space defined by θ<sub>1</sub> and θ<sub>2</sub> to the right of Fig.2.
 
-<img src="/img/1_likeli1_2.png" width="800" heigth="680"> 
+<img src="/img/1_likeli1.png" width="800" heigth="680"> 
 
 _Fig.2 Likelihood wrt. observations._
 
 Continue with the sample linear function above, if we can be able to make a couple of more noisy observations, we can obtain multiple _likelihood_ as functions of _**θ**_. Here is another _likelihood_ by observing another data points:
 
-<img src="/img/1_likeli1.gif" width="800" heigth="680"> 
+<img src="/img/1_likeli1_2.png" width="800" heigth="680"> 
 
 _Fig.3 Likelihood wrt. another observations._
 
