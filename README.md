@@ -99,6 +99,8 @@ At this point, it is no suprising that why the [_**Maximum Likelihood Estimation
 
 ### * Remarks
 - MLE can be enough
+- great property of Gaussian: multiply
 - informative vs. non-informative prior
+- Bayesian framework: ecapsulate many special cases such as _least squares_ when Gaussian is assumed
 - feature space discussion
 
