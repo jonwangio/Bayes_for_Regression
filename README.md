@@ -62,23 +62,27 @@ def likeli(theta1,theta2,obs_y,obs_x):  # It is a function of theta with known o
     func = (1/np.sqrt(6.28*sigma**2))*np.exp((obs_y-theta1-theta2*obs_x)**2/(-2*sigma**2))
     return func
 ```
-And this _likelihood_ is obviously a function wrt. _**θ**_ as the tuple _**(x<sub>k</sub>, y<sub>k</sub>)**_ is observed. More intuitively, if we observe one pair of _**(x<sub>k</sub> , y<sub>k</sub>)**_ as denoted red to the left of Fig.2, the above _likelihood_ is a function of _**θ**_ or _[θ<sub>1</sub>, θ<sub>2</sub>]<sup>T</sup>_, and can be plotted in a 2-dimensional space defined by θ<sub>1</sub> and θ<sub>2</sub> to the right of Fig.2.
+where I chose a standard deviation of _**1**_ for this _Gaussian likelihood_ as I assume for the noise level. It shows my confidence interval that the observations should be in around the true linear model. This _likelihood_ is obviously a function wrt. _**θ**_ as the tuple _**(x<sub>k</sub> , y<sub>k</sub>)**_ is observed. More intuitively, if we observe one pair of _**(x<sub>k</sub> , y<sub>k</sub>)**_ as denoted red to the left of Fig.2, the above _likelihood_ is a function of _**θ**_ or _[θ<sub>1</sub> , θ<sub>2</sub>]<sup>T</sup>_, and can be plotted in a 2-dimensional space defined by θ<sub>1</sub> and θ<sub>2</sub> to the right of Fig.2.
 
 <img src="/img/1_likeli1.png" width="800" heigth="680"> 
 
 _Fig.2 Likelihood wrt. observations._
 
+Continue with the sample linear function above, if we can be able to make a couple of more noisy observations, we can obtain multiple _likelihood_ as functions of _**θ**_. Here is another _likelihood_ by observing another data points:
 
+<img src="/img/1_likeli1_2.gif" width="800" heigth="680"> 
 
-Continue with the sample linear function above, 
+_Fig.3 Likelihood wrt. another observations._
 
-Observing data is always considered to be an [_**iid**_](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables) process, thus the joint _likelihood_ of any _**θ**_ gives rise to all the observations is simply a multiplication of all the individual _likelihood_:
+For each observation, the _likelihood_ function is only roughly a line in the space of _[θ<sub>1</sub> , θ<sub>2</sub>]<sup>T</sup>_, which implies that there are infinite number of _[θ<sub>1</sub> , θ<sub>2</sub>] options running all the way from positive to negative values to give rise to the observation. This is extremely reasonable as one point observation determines lines with either positive or negative interception and slope. But it's getting clear that if we can combine these _likelihood_ function, the profile of _**θ**_ can be delineated. In what way to combine? As the _likelihood_ is a probability measurement, combining the _likelihood_ is simply a joint probability. Observing each data point as a _**(x<sub>k</sub> , y<sub>k</sub>)**_ tuple is considered to be an [_**iid**_](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables) process, thus the joint _likelihood_ of any _**θ**_ gives rise to all the observations is a multiplication of all the individual _likelihood_:
 
-_**P(D|θ) = ∏<sub>i</sub>P((x<sub>i</sub> , y<sub>i</sub>)|θ)**_
+_**P(D|θ) = ∏<sub>i</sub> P((x<sub>i</sub> , y<sub>i</sub>)|θ)**_
+
+The animation (Fig.4) below shows how this joint probability is updated with each added observation. 
 
 <img src="/img/1_likeli1.gif" width="800" heigth="680"> 
 
-_Fig.3 Likelihood wrt. observations._
+_Fig.4 Likelihood wrt. observations._
 
 
 
