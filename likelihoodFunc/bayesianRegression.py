@@ -23,6 +23,7 @@
 import numpy as np
 import pylab as pl
 import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 
 from pylab import meshgrid,cm,imshow,contour,clabel,colorbar,axis,title,show
 from mpl_toolkits.mplot3d import Axes3D
@@ -42,16 +43,16 @@ def likeli(theta1,theta2,obs_y,obs_x):  # It is a function of theta with known o
     func = (1/np.sqrt(6.28*sigma**2))*np.exp((obs_y-theta1-theta2*obs_x)**2/(-2*sigma**2))
     return func
 
-# True linear function
-def linearF(x):
-    func = 3 + 2*x
+# True linear model
+def linearF(x):  # A very simple univariate linear model
+    func = 3 + 2*x  # f(x) = 3 + 2*x
     return func
 
 # Function for visualizing observations and likelihood
 def plotLikelihood(obs_x, obs_y, k, likelihood):
     # Observations
     plt.subplot(1,2,1)
-    plt.plot(obs_x,obs_y,'k.',obs_x[k+1],obs_y[k+1],'ro')
+    plt.plot(obs_x,obs_y,'k.',obs_x[:k+1],obs_y[:k+1],'ro')
     plt.plot(true_x,true_y,'g--')
     plt.xlim([-5.,5.])
     plt.ylim([-7.5,12.5])
@@ -62,8 +63,30 @@ def plotLikelihood(obs_x, obs_y, k, likelihood):
     plt.imshow(likelihood,cmap='YlOrRd',extent=[-5,5,-5,5])
     plt.xlabel('θ1')
     plt.ylabel('θ2')
-
     
+# Function for visualizing prior and random draw from the prior
+def plotPriorDraw(T1, T2, prior, true_x):
+    T = np.hstack((T1.reshape(-1,1),T2.reshape(-1,1)))  # Columns of theta tuple
+    p = prior.reshape(-1,)  # Prior as the probability to draw 
+    thetaInd = np.random.choice(np.arange(len(T)), None, p=p/np.sum(p))
+    # Observations
+    im = plt.figure(figsize=(10,4))
+    plt.subplot(1,2,1)
+    plt.imshow(prior,cmap='YlGnBu',extent=[-5,5,-5,5])
+    plt.plot(T[thetaInd][0], T[thetaInd][1], 'r.', markersize=15)
+    plt.xlabel('θ1')
+    plt.ylabel('θ2')
+    # Likelihood
+    plt.subplot(1,2,2)
+    plt.plot(true_x, T[thetaInd][0]+T[thetaInd][1]*true_x,'g--')
+    plt.xlim([-5.,5.])
+    plt.ylim([-7.5,12.5])
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.tight_layout()
+    return im
+    
+
 
 # Ground truth and noisy observations
 obs_x = np.random.rand(3)[:,None]; obs_x = obs_x*8-4  # Draw 3 noisy observations in [-4,4]
@@ -91,17 +114,24 @@ T1,T2 = meshgrid(theta1, theta2) # grid of point
 likelihood = 1
 for k in range(2):  #(len(obs_y)):
     prior = pri(T1,T2) 
-    likelihood = likeli(T1, T2, obs_y[k], obs_x[k]) # evaluation of the function on the grid
+    likelihood *= likeli(T1, T2, obs_y[k], obs_x[k]) # evaluation of the function on the grid
     posterior = prior*likelihood
-
+    
 
 # Visualization in 2D
 #im = imshow(posterior,cmap='YlOrRd') # drawing the function
 #colorbar(im) # adding the colobar on the right
 #show()
 plotLikelihood(obs_x, obs_y, k, likelihood)
-plt.imshow(prior,cmap='GnBu',extent=[-5,5,-5,5])
-plt.imshow(likelihood,cmap='YlOrRd',extent=[-5,5,-5,5])
+# Animation of prior draw
+ims = []
+for i in range(30):
+    im = plotPriorDraw(T1, T2, prior, true_x)
+    ims.append(im)
+ani = animation.ArtistAnimation(fig, ims, interval=50, blit=True,
+                                repeat_delay=1000)
+
+ani.save('dynamic_images.mp4')
 
 
 # Plot 3D
