@@ -23,7 +23,7 @@ Without considerting the confidence, conventional linear regression only achieve
 ### * Bayesian inference
 Take the following _univariate linear regression_ problem for example, _Bayesian statistics_ attempt to find out the true model and with quantified confidence simultaneously. Visually, _Bayesian statistics_ tries to figure out the true form of the unobserved linear model (linear parameters) in Fig.1 through few point observations (points in this example).
 
-<img src="/img/0_data.png" width="340" heigth="290"> 
+<img src="/img/0_data.png" width="450" heigth="390"> 
 
 _Fig.1 Linear regression problem setting._
 
@@ -50,9 +50,23 @@ _**P(θ|D) = P(D|θ)P(θ)/P(D)**_
 where _**D**_ is a collection of observed noisy point pairs _**{(x<sub>1</sub>, y<sub>1</sub>), (x<sub>2</sub>, y<sub>2</sub>), (x<sub>3</sub>, y<sub>3</sub>)}**_ as shown in Fig.1. In order to quantify the _posterior_ _**P(θ|D)**_, the problem now reduces to specify the _likelihood_ _**P(D|θ)**_ and _prior_ _**P(D)**_ as mentioned above, which is a 2-step process. Although, specifying both functions is non-trivial, in this simple experiment, we stay simple to keep this snippet with the simplest case.
 
 ### * Bayesian function specification
-For the _likelihood_ function, by saying the noisy observations are _Gaussian_ distributed around the true model, it is then reasonable to assume that observations are likely to follow a _Gaussian_ distribution _given_ any known _**θ**_. Thus for any single observed data point _**(x<sub>k</sub>, y<sub>k</sub>)**_, the _likelihood_ measures the probability of the model parameter _**θ**_ gives rise to this known data point. In short, given any _**θ**_, the probability of observing this particular point of tuple _**(x<sub>k</sub> , y<sub>k</sub>)**_ is:
+For any single observed data point _**(x<sub>k</sub>, y<sub>k</sub>)**_, the _likelihood_ measures the probability of the model parameter _**θ**_ gives rise to this known data point. Thus, _given_ any possible _**θ**_, how likely it is to observe this particular point of tuple _**(x<sub>k</sub> , y<sub>k</sub>)**_? Referring above to the noisy observation from the linear model, by saying we have observations with noise _**ε**_ around the true model, it is most handy to impose a _Gaussian_ distribution over the noise around the true model. In short, the _likelihood_ of observing the tuple _**(x<sub>k</sub> , y<sub>k</sub>)**_ follows a _Gaussian_ distribution around the model specified by _**θ**_:
 
-_**P(D|θ) = P((x<sub>k</sub> , y<sub>k</sub>)|θ)**_
+_**P(D|θ) = P((x<sub>k</sub> , y<sub>k</sub>)|θ) ~ N(y<sub>k</sub> ; θ<sup>T</sup>X, ε)**_
+
+This _Gaussian_ form _likelihood_ can be easily implemented as a function in _python_ as:
+
+```python
+def likeli(theta1,theta2,obs_y,obs_x):  # It is a function of theta with known observations
+    sigma = 1  # Standard deviation of the Gaussian likelihood
+    func = (1/np.sqrt(6.28*sigma**2))*np.exp((obs_y-theta1-theta2*obs_x)**2/(-2*sigma**2))
+    return func
+```
+And this _likelihood_ is obviously a function wrt. _**θ**_ as the tuple _**(x<sub>k</sub>, y<sub>k</sub>)**_ is observed. More intuitively, if we observe one pair of _**(x<sub>k</sub> , y<sub>k</sub>)**_ as denoted red to the left of Fig.2, the above _likelihood_ is a function of _**θ**_ or _[θ<sub>1</sub>, θ<sub>2</sub>]<sup>T</sup>_, and can be plotted in a 2-dimensional space defined by θ<sub>1</sub> and θ<sub>2</sub> to the right of Fig.2.
+
+<img src="/img/1_likeli1.png" width="800" heigth="680"> 
+
+_Fig.2 Likelihood wrt. observations._
 
 
 
@@ -62,9 +76,9 @@ Observing data is always considered to be an [_**iid**_](https://en.wikipedia.or
 
 _**P(D|θ) = ∏<sub>i</sub>P((x<sub>i</sub> , y<sub>i</sub>)|θ)**_
 
-<img src="/img/1_likeli1.gif" width="600" heigth="500"> 
+<img src="/img/1_likeli1.gif" width="800" heigth="680"> 
 
-_Fig.2 Likelihood wrt. observations._
+_Fig.3 Likelihood wrt. observations._
 
 
 
