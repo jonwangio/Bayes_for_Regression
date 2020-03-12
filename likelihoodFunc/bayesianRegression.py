@@ -23,12 +23,16 @@
 import numpy as np
 import pylab as pl
 import matplotlib.pyplot as plt
-import matplotlib.animation as animation
 
 from pylab import meshgrid,cm,imshow,contour,clabel,colorbar,axis,title,show
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
+from matplotlib.animation import FuncAnimation
+
+#####################################################
+# 01 Functions for prior, likelihood, and visualization
+#####################################################
 
 # Prior function for a simple linear model with only a interception and a slope
 def pri(theta1,theta2):
@@ -70,23 +74,31 @@ def plotPriorDraw(T1, T2, prior, true_x):
     p = prior.reshape(-1,)  # Prior as the probability to draw 
     thetaInd = np.random.choice(np.arange(len(T)), None, p=p/np.sum(p))
     # Observations
-    im = plt.figure(figsize=(10,4))
-    plt.subplot(1,2,1)
-    plt.imshow(prior,cmap='YlGnBu',extent=[-5,5,-5,5])
-    plt.plot(T[thetaInd][0], T[thetaInd][1], 'r.', markersize=15)
-    plt.xlabel('θ1')
-    plt.ylabel('θ2')
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10,4))
+    ax1.imshow(prior,cmap='YlGnBu',extent=[-5,5,-5,5])
+    point, = ax1.plot(T[thetaInd][0], T[thetaInd][1], 'r.', markersize=15)
+    ax1.set_xlabel('θ1')
+    ax1.set_ylabel('θ2')
     # Likelihood
-    plt.subplot(1,2,2)
-    plt.plot(true_x, T[thetaInd][0]+T[thetaInd][1]*true_x,'g--')
-    plt.xlim([-5.,5.])
-    plt.ylim([-7.5,12.5])
-    plt.xlabel('x')
-    plt.ylabel('y')
+    line, = ax2.plot(true_x, T[thetaInd][0]+T[thetaInd][1]*true_x,'g--')
+    ax2.set_xlim([-5.,5.])
+    ax2.set_ylim([-7.5,12.5])
+    ax2.set_xlabel('x')
+    ax2.set_ylabel('y')
     plt.tight_layout()
-    return im
     
-
+    def update(i):
+        thetaInd = np.random.choice(np.arange(len(T)), None, p=p/np.sum(p))
+        point.set_data(T[thetaInd][0], T[thetaInd][1])
+        line.set_ydata(T[thetaInd][0]+T[thetaInd][1]*true_x)
+    
+    ani = FuncAnimation(fig, update, frames=np.arange(0, 100), interval=100)
+    ani.save('2_priorDraw.gif', dpi=500, writer='imagemagick')
+    
+    
+#####################################################
+# 02 True model and noisy observations
+#####################################################
 
 # Ground truth and noisy observations
 obs_x = np.random.rand(3)[:,None]; obs_x = obs_x*8-4  # Draw 3 noisy observations in [-4,4]
@@ -104,6 +116,10 @@ plt.xlabel('x')
 plt.ylabel('y')
 
 
+#####################################################
+# 03 Likelihood and prior for theta_1 and theta_2
+#####################################################
+
 # Define theta space for visualizing likelihood and prior
 theta1 = np.arange(-5.0,5.1,0.1)
 theta2 = np.arange(-5.0,5.1,0.1)
@@ -118,20 +134,20 @@ for k in range(2):  #(len(obs_y)):
     posterior = prior*likelihood
     
 
+#####################################################
+# 04 Visualization
+#####################################################
+
 # Visualization in 2D
+# Likelihood
+plotLikelihood(obs_x, obs_y, k, likelihood)
+# Prior
+plt.imshow(prior,cmap='YlGnBu',extent=[-5,5,-5,5])
+# Animation of prior draw
+plotPriorDraw(T1, T2, prior, true_x)
 #im = imshow(posterior,cmap='YlOrRd') # drawing the function
 #colorbar(im) # adding the colobar on the right
 #show()
-plotLikelihood(obs_x, obs_y, k, likelihood)
-# Animation of prior draw
-ims = []
-for i in range(30):
-    im = plotPriorDraw(T1, T2, prior, true_x)
-    ims.append(im)
-ani = animation.ArtistAnimation(fig, ims, interval=50, blit=True,
-                                repeat_delay=1000)
-
-ani.save('dynamic_images.mp4')
 
 
 # Plot 3D
