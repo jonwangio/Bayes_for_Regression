@@ -55,18 +55,18 @@ def linearF(x):  # A very simple univariate linear model
 # Function for visualizing observations and likelihood
 def plotLikelihood(obs_x, obs_y, k, likelihood):
     # Observations
-    plt.subplot(1,2,1)
-    plt.plot(obs_x,obs_y,'k.',obs_x[:k+1],obs_y[:k+1],'ro')
-    plt.plot(true_x,true_y,'g--')
-    plt.xlim([-5.,5.])
-    plt.ylim([-7.5,12.5])
-    plt.xlabel('x')
-    plt.ylabel('y')
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11,4))
+    ax1.plot(obs_x,obs_y,'k.',obs_x[:k+1],obs_y[:k+1],'ro')
+    ax1.plot(true_x,true_y,'g--')
+    ax1.set_xlim([-5.,5.])
+    ax1.set_ylim([-7.5,12.5])
+    ax1.set_xlabel('x')
+    ax1.set_ylabel('y')
     # Likelihood
-    plt.subplot(1,2,2)
-    plt.imshow(likelihood,cmap='YlOrRd',extent=[-5,5,-5,5])
-    plt.xlabel('θ1')
-    plt.ylabel('θ2')
+    ax2.imshow(likelihood,cmap='YlOrRd',extent=[-5,5,-5,5])
+    ax2.set_xlabel('θ1')
+    ax2.set_ylabel('θ2')
+    plt.tight_layout()
     
 # Function for visualizing prior and random draw from the prior
 def plotPriorDraw(T1, T2, prior, true_x):
@@ -128,7 +128,7 @@ T1,T2 = meshgrid(theta1, theta2) # grid of point
 
 # Loop over number of observations
 likelihood = 1
-for k in range(2):  #(len(obs_y)):
+for k in range(3):  #(len(obs_y)):
     prior = pri(T1,T2) 
     likelihood *= likeli(T1, T2, obs_y[k], obs_x[k]) # evaluation of the function on the grid
     posterior = prior*likelihood
@@ -143,8 +143,12 @@ for k in range(2):  #(len(obs_y)):
 plotLikelihood(obs_x, obs_y, k, likelihood)
 # Prior
 plt.imshow(prior,cmap='YlGnBu',extent=[-5,5,-5,5])
+plt.xlabel('θ1')
+plt.ylabel('θ2')
 # Animation of prior draw
 plotPriorDraw(T1, T2, prior, true_x)
+# Posterior
+plt.imshow(posterior,cmap='YlGnBu',extent=[-5,5,-5,5])
 #im = imshow(posterior,cmap='YlOrRd') # drawing the function
 #colorbar(im) # adding the colobar on the right
 #show()
