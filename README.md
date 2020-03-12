@@ -1,6 +1,9 @@
 # Experiment on Bayesian Regression (for educational purpose)
 -------------------
-
+###### Credit to this tutorial can be assigned as:
+```
+J. Wang, Bayes_for_Regression, (2020), GitHub repository, https://github.com/wonjohn/Bayes_for_Regression
+```
 Short recap
 -------------------
 _Bayesian epistemology_ introduces important constraints on top of rational degrees of belief and a rule of probabilistic inference--the principle of conditionalization, according to [William Talbott, 2008](https://plato.stanford.edu/entries/epistemology-bayesian/).
