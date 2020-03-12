@@ -96,7 +96,7 @@ Different from that _likelihood_ can be delineated from observed information, ch
 But here in this experiment, although it is a simple linear regression example, we are running into a awkward situation: nothing is availabe except the observations to make inference about the model. This is where one has to rely on _improper_ or _non-informative_ _prior_ distribution for the model parameters.
 
 
-<img src="/img/2_prior.png" width="680" heigth="680"> 
+<img src="/img/2_prior.png" width="380" heigth="380"> 
 
 _Fig.5 Non-informative prior distribution for model parameters._
 
@@ -118,7 +118,7 @@ _Fig.6 Randomly drawn prior functions for the model._
 
 
 
-<img src="/img/3_post_likeli.gif" width="800" heigth="680"> 
+<img src="/img/3_post_likeli.gif" width="380" heigth="380"> 
 
 _Fig.6 Prior function for model parameters._
 
