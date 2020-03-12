@@ -36,7 +36,7 @@ from matplotlib.animation import FuncAnimation
 
 # Prior function for a simple linear model with only a interception and a slope
 def pri(theta1,theta2):
-    sigma = 3  # Standard deviation of the Gaussian prior
+    sigma = 5  # Standard deviation of the Gaussian prior
     func = (1/np.sqrt(6.28*sigma**2))*np.exp((theta1**2 + theta2**2)**2/(-2*sigma**2))
     return func
 
@@ -74,7 +74,7 @@ def plotPriorDraw(T1, T2, prior, true_x):
     p = prior.reshape(-1,)  # Prior as the probability to draw 
     thetaInd = np.random.choice(np.arange(len(T)), None, p=p/np.sum(p))
     # Observations
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10,4))
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11,4))
     ax1.imshow(prior,cmap='YlGnBu',extent=[-5,5,-5,5])
     point, = ax1.plot(T[thetaInd][0], T[thetaInd][1], 'r.', markersize=15)
     ax1.set_xlabel('θ1')
@@ -93,7 +93,7 @@ def plotPriorDraw(T1, T2, prior, true_x):
         line.set_ydata(T[thetaInd][0]+T[thetaInd][1]*true_x)
     
     ani = FuncAnimation(fig, update, frames=np.arange(0, 100), interval=100)
-    ani.save('2_priorDraw.gif', dpi=500, writer='imagemagick')
+    ani.save('2_priorDraw.gif', dpi=400, writer='imagemagick')
     
     
 #####################################################
