@@ -90,6 +90,10 @@ At this point, it is no suprising that why the [_**Maximum Likelihood Estimation
 
 
 
+<img src="/img/2_priorDraw.gif" width="800" heigth="680"> 
+
+_Fig.5 Prior function for model parameters._
+
 
 ### * Bayesian posterior
 
@@ -101,7 +105,7 @@ At this point, it is no suprising that why the [_**Maximum Likelihood Estimation
 - MLE can be enough
 - great property of Gaussian: multiply
 - informative vs. non-informative prior
-- Bayesian framework: ecapsulate many special cases such as _least squares_ when Gaussian is assumed
+- Bayesian framework: ecapsulate many special cases such as _least squares_ when Gaussian is assumed, and prior relates to regularization
 - function space vs. parameter space
 - feature space discussion
 
