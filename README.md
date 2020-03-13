@@ -115,7 +115,9 @@ Now, one may start to ask: what on earth is the point to use these badly designe
 
 - More observations would wash away the effect of the _improper_ or _non-informative prior_ assumption.
 
+<img src="/img/4_postObs.gif" width="330" heigth="330"> 
 
+_Fig.7 Change of posterior distribution/function for model parameters along with increasing observations._
 
 ### * Remarks
 - MLE can be enough
