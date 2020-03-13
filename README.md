@@ -110,14 +110,15 @@ In _Bayesian statistics_, this multiplication is normally referred as _update_ a
 
 _Fig.6 Posterior distribution/function for model parameters._
 
-Now, one may start to ask: what on earth is the point to use these badly designed _prior_ functions?! Unfortunately, there is no anwser. There is even no scientific guidelines for choosing a _prior_. It is the nature of statistic inference that we are force to make some assumptions from scratch, just like we have to assume there is a linear relationship already as we only see few data points. There are [few discussions](https://stats.stackexchange.com/questions/27813/what-is-the-point-of-non-informative-priors) going around that one can refer. More formal research can be found in [_**The Bayesian Choice: From Decision-Theoretic Foundations to Computational Implementation (Springer Texts in Statistics**_](https://www.amazon.com/dp/0387715983/), as well as [_**Moving beyond noninformative priors: why and how to choose weakly informative priors in Bayesian analyses**_](https://onlinelibrary.wiley.com/doi/10.1111/oik.05985).
+Now, one may start to ask: what on earth is the point to use these badly designed _prior_ functions?! Unfortunately, there is no anwser. There is no scientific guidelines for choosing a _prior_. It is the nature of statistic inference that we are force to make some assumptions from scratch, just like we have to assume there is a linear relationship already as we only see few data points. There are [few discussions](https://stats.stackexchange.com/questions/27813/what-is-the-point-of-non-informative-priors) going around that one can refer. More formal research can be found in [**The Bayesian Choice: From Decision-Theoretic Foundations to Computational Implementation (Springer Texts in Statistics**](https://www.amazon.com/dp/0387715983/), as well as [**Moving beyond noninformative priors: why and how to choose weakly informative priors in Bayesian analyses**](https://onlinelibrary.wiley.com/doi/10.1111/oik.05985).
 
-
-- More observations would wash away the effect of the _improper_ or _non-informative prior_ assumption.
+_Improper_ or _non-informative prior_ shouldn't be the reason to be pessimistic about _Bayesian principle_. In most cases, we are still doing [incremental science](https://www.statnews.com/2015/12/02/science-groundbreaking/), which means there is almost always some existing information we could leverage and to be encoded as _prior_ knowledge, like the example of soil loss prediction mentioned earlier. And apart from the _prior_ specification, today, we have such many approaches to make observations, which means we could be highly confident about the model parameters with _likelihood_. The visualization of the _posterior_ below (Fig.7) shows how increasing observations may update our knowledge even from a poor _prior_. The multiplication in _**P(D|θ)P(θ)/P(D)**_ is explicitly two way: (1) the _prior_ is constraining or dragging, while (2) the _likelihood_ is updating and washing away the effect of constraining or dragging.
 
 <img src="/img/4_postObs.gif" width="800" heigth="680"> 
 
 _Fig.7 Change of posterior distribution/function for model parameters along with increasing observations._
+
+- normalization term
 
 ### * Remarks
 - MLE can be enough
