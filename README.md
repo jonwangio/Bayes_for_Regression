@@ -93,25 +93,26 @@ But here in this experiment, although it is a simple linear regression example, 
 
 _Fig.4 Non-informative prior distribution for model parameters._
 
-This _improper Gaussian_ distribution within the _[θ<sub>1</sub> , θ<sub>2</sub>]<sup>T</sup>_ space means that if we draw points randomly from it, it is more likely to have _**0**_ with values close to zero. Visually, each random point in the _[θ<sub>1</sub> , θ<sub>2</sub>]<sup>T</sup>_ space determines a random line in the space of _[x, y]<sup>T</sup>_ as shown below in Fig.5, but most lines are with zero interception and slope.  
+This _improper Gaussian_ distribution within the _[θ<sub>1</sub> , θ<sub>2</sub>]<sup>T</sup>_ space means that if we draw points randomly from it, it is more likely to have _**0**_ with values close to zero. Visually, each random point in the _[θ<sub>1</sub> , θ<sub>2</sub>]<sup>T</sup>_ space determines a random line in the space of _[x, y]<sup>T</sup>_ as shown below in Fig.5, but most lines are with interception and slope close to zero.  
 
 <img src="/img/2_priorDraw.gif" width="800" heigth="680"> 
 
 _Fig.5 Randomly drawn prior functions for the model._
 
-The effect of this _improper Gaussian prior_ combined with the _likelihood_ can be visualized as in Fig.6. The combination, again, follows the principle of joint statistical distribution, is achieved through multiplication. The resultant _posterior_ distribution of the model parameter _**0**_ is compared with their _likelihood_ distribution solely determined by observed evidences. 
+Since we know that the true model parameters, plus that we also know that the true parameters are well captured by the _likelihood_, this _improper prior_ appears to be way off the target. Is it possible to update this _prior_ to a meaningful state by using the _likelihood_?
+
+### * Bayesian posterior
+It seems like the _posterior_ distribution of _**0**_ obtained by combining its _likelihood_ and _improper prior_ is acceptable. The effect of this _improper Gaussian prior_ combined with the _likelihood_ can be visualized as in Fig.6 below. The combination, again, follows the principle of joint statistical distribution, is achieved through multiplication. The resultant _posterior_ distribution of the model parameter _**0**_ is compared with their _likelihood_ distribution solely determined by observed evidences. 
+
+In _Bayesian statistics_, this multiplication is normally referred as _update_ as mentioned at the beginning of this experiment, where the _prior_ knowledge is _updated_ by the _likelihood_ brought by observations. Equivalently, I could also say that the _likelihood_ is being _shifted_ or _dragged_ by our _prior_ blief, because our _prior_ blief imposes a constraint even we have observed few evidence. Although not too prominent, The _improperness_ of the _improper prior_ in this case is still highlighted as we already know that the _likelihood_ is perfectly centered around the true parameter values of _**[3, 2]**_, and now it is _shifted_ away. But we would never notice this in practice as we wouldn't know the true model parameters. One can see that the direction of the _shifting likelihood_ is towards the _prior_. But as it is a multiplication, the _shift_ would stay around the large value in both _prior_ and _likelihood_, thus the _shift_ is also along the gentle gradient of the _likelihood_ while moving towards the _prior_. The major reason that the _posterior_ is not two far away shifted from the _likelihood_ is that the _improper prior_ is still relatively "flat", and the distribution rendered by the _likelihood_ is strongly centered. So, the resultant multiplication would largely driven by the _likelihood_. 
 
 <img src="/img/3_post_likeli.gif" width="330" heigth="330"> 
 
 _Fig.6 Posterior distribution/function for model parameters._
 
-In _Bayesian statistics_, this multiplication is normally referred as _update_ as mentioned at the beginning of this experiment, where the _prior_ knowledge is _updated_ by the _likelihood_ brought by observations. Equivalently, I could also say that the _likelihood_ is being _shifted_ or _dragged_ by our _prior_ blief, because our _prior_ blief imposes a constraint even we have observed few evidence. One can see that the direction of the _shifting likelihood_ is towards the _prior_. But as it is a multiplication, the _shift_ would stay around the large value in both _prior_ and _likelihood_, thus the _shift_ is also along the gentle gradient of the _likelihood_ while moving towards the _prior_.
-
-The _improperness_ of the _improper prior_ in this case is nicely highlighted as we already know that the _likelihood_ is perfectly centered around the true parameter values of _**[3, 2]**_, and now it is _shifted_ away. But we would never notice this in practice as we wouldn't know the true model parameters.
-
 Now, one may start to ask: what on earth is the point to use these badly designed _prior_ functions?! Unfortunately, there is no anwser. There is even no scientific guidelines for choosing a _prior_. It is the nature of statistic inference that we are force to make some assumptions from scratch, just like we have to assume there is a linear relationship already as we only see few data points. There are [few discussions](https://stats.stackexchange.com/questions/27813/what-is-the-point-of-non-informative-priors) going around that one can refer. More formal research can be found in [_**The Bayesian Choice: From Decision-Theoretic Foundations to Computational Implementation (Springer Texts in Statistics**_](https://www.amazon.com/dp/0387715983/), as well as [_**Moving beyond noninformative priors: why and how to choose weakly informative priors in Bayesian analyses**_](https://onlinelibrary.wiley.com/doi/10.1111/oik.05985).
 
-### * Bayesian posterior
+
 - More observations would wash away the effect of the _improper_ or _non-informative prior_ assumption.
 
 
