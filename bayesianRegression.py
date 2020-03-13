@@ -95,13 +95,47 @@ def plotPriorDraw(T1, T2, prior, true_x):
     ani = FuncAnimation(fig, update, frames=np.arange(0, 100), interval=100)
     ani.save('2_priorDraw.gif', dpi=400, writer='imagemagick')
     
+# Function for visualizing posterior with different number of observations
+def plotObsPost(T1, T2, obs_x, obs_y, true_x, true_y):
+    # Observations
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11,4))
+    ax1.plot(obs_x,obs_y,'ko',true_x,true_y,'g--')
+    point, = ax1.plot(obs_x[0], obs_y[0], 'r.', markersize=15)
+    ax1.set_xlim([-5.,5.])
+    ax1.set_ylim([-7.5,12.5])
+    ax1.set_xlabel('x')
+    ax1.set_ylabel('y')
+    # Posterior
+    prior = pri(T1,T2) 
+    likelihood = likeli(T1, T2, obs_y[0], obs_x[0]) # evaluation of the function on the grid
+    posterior = prior*likelihood
+    im = ax2.imshow(posterior,cmap='YlGnBu',extent=[-5,5,-5,5])
+    ax2.set_xlabel('θ1')
+    ax2.set_ylabel('θ2')
+    plt.tight_layout()
+    
+    def update(i):
+        like=1 # evaluation of the function on the grid
+        pr = pri(T1,T2)
+        for k in range(i):  #(len(obs_y)):
+            like *= likeli(T1, T2, obs_y[k], obs_x[k]) # evaluation of the function on the grid
+        post = pr*like
+        vmax = np.max(post)
+        vmin = np.min(post)
+        im.set_array(post)
+        im.set_clim(vmin, vmax)
+        point.set_data(obs_x[:i+1], obs_y[:i+1])
+    
+    ani = FuncAnimation(fig, update, frames=np.arange(0,len(obs_x)+1), interval=500)
+    ani.save('4_postObs.gif', dpi=400, writer='imagemagick')
+    
     
 #####################################################
 # 02 True model and noisy observations
 #####################################################
 
 # Ground truth and noisy observations
-obs_x = np.random.rand(3)[:,None]; obs_x = obs_x*8-4  # Draw 3 noisy observations in [-4,4]
+obs_x = np.random.rand(15)[:,None]; obs_x = obs_x*10-5  # Draw n noisy observations in [-4,4]
 obs_y = linearF(obs_x) + np.random.randn(len(obs_x),1)*1.0
 
 true_x = np.arange(-5.0,5.1,0.1)  # Ground truth data showing the linear function
@@ -149,6 +183,7 @@ plt.ylabel('θ2')
 plotPriorDraw(T1, T2, prior, true_x)
 # Posterior
 plt.imshow(posterior,cmap='YlGnBu',extent=[-5,5,-5,5])
+plotObsPost(T1, T2, obs_x, obs_y, true_x, true_y)
 #im = imshow(posterior,cmap='YlOrRd') # drawing the function
 #colorbar(im) # adding the colobar on the right
 #show()
