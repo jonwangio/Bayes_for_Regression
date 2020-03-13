@@ -109,6 +109,8 @@ In _Bayesian statistics_, this multiplication is normally referred as _update_ a
 
 The _improperness_ of the _improper prior_ in this case is nicely highlighted as we already know that the _likelihood_ is perfectly centered around the true parameter values of _**[3, 2]**_, and now it is _shifted_ away. But we would never notice this in practice as we wouldn't know the true model parameters.
 
+Now, one may start to ask: what on earth is the point to use these badly designed _prior_ functions?! Unfortunately, there is no anwser. There is even no scientific guidelines for choosing a _prior_. It is the nature of statistic inference that we are force to make some assumptions from scratch, just like we have to assume there is a linear relationship already as we only see few data points. There are [few discussions](https://stats.stackexchange.com/questions/27813/what-is-the-point-of-non-informative-priors) going around that one can refer. More formal research can be found in [_**The Bayesian Choice: From Decision-Theoretic Foundations to Computational Implementation (Springer Texts in Statistics**_](https://www.amazon.com/dp/0387715983/), as well as [_**Moving beyond noninformative priors: why and how to choose weakly informative priors in Bayesian analyses**_](https://onlinelibrary.wiley.com/doi/10.1111/oik.05985).
+
 ### * Bayesian posterior
 - More observations would wash away the effect of the _improper_ or _non-informative prior_ assumption.
 
