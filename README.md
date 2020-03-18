@@ -118,7 +118,7 @@ _Improper_ or _non-informative prior_ shouldn't be the reason to be pessimistic 
 
 Even without the context of domain knowledge, using _improper prior_ achieves some appealing results. A _prior_, along with the _likelihood_ builds a connection to the idea of [_**regularization**_](http://primo.ai/index.php?title=Regularization), which is a technique explicitly modifies how the model parameters are sought given any specified _loss function_. If the _likelihood_ is viewed as a _loss function_ specified by observations, then the _prior_ plays the role of a _regularizer_ to constrain the model parameters from being solely controlled by the _loss function_. In practice, there are few design options for the _regularizer_ for achieving different purposes: avoid overfitting (equivalent to _Gaussian prior function_), parameter selection (equivalent to _Laplace prior function_) and in combination. These _regularizer_ are called in different ways, for instance, as shown in Fig.7.
 
-<p align="center"><img src="/img/4_regularization.png" width="800" heigth="680"></p>
+<p align="center"><img src="/img/4_regularization.png" width="600" heigth="510"></p>
 
 <p align="center">_Fig.7 Regularization equivalence of _prior_ functions (src: http://primo.ai/index.php?title=Regularization)._</p>
 
