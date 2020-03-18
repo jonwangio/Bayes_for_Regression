@@ -28,11 +28,16 @@ from pylab import meshgrid,cm,imshow,contour,clabel,colorbar,axis,title,show
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
-from matplotlib.animation import FuncAnimation
+from matplotlib.animation import FuncAnimation, PillowWriter
 
 #####################################################
 # 01 Functions for prior, likelihood, and visualization
 #####################################################
+
+# True linear model
+def linearF(x, theta1, theta2):  # A very simple univariate linear model
+    func = theta1 + theta2*x  # f(x)
+    return func
 
 # Prior function for a simple linear model with only a interception and a slope
 def pri(theta1,theta2):
@@ -47,10 +52,14 @@ def likeli(theta1,theta2,obs_y,obs_x):  # It is a function of theta with known o
     func = (1/np.sqrt(6.28*sigma**2))*np.exp((obs_y-theta1-theta2*obs_x)**2/(-2*sigma**2))
     return func
 
-# True linear model
-def linearF(x):  # A very simple univariate linear model
-    func = 3 + 2*x  # f(x) = 3 + 2*x
-    return func
+# Posterior estimation of the model parameters
+def post(pri, likeli):
+    return pri*likeli
+
+# Predictive distribution of model based upon a SINGLE [theta1, theta2]
+def pred(x_pred, y_pred, theta1, theta2, posterior):
+     func = (y_pred - linearF(x_pred, theta1, theta2))*posterior
+     return func
 
 # Function for visualizing observations and likelihood
 def plotLikelihood(obs_x, obs_y, k, likelihood):
@@ -68,19 +77,31 @@ def plotLikelihood(obs_x, obs_y, k, likelihood):
     ax2.set_ylabel('θ2')
     plt.tight_layout()
     
-# Function for visualizing prior and random draw from the prior
-def plotPriorDraw(T1, T2, prior, true_x):
+# Function for visualizing Bayes and random draw from the bayes
+def plotBayesDraw(T1, T2, bayes, true_x):
     T = np.hstack((T1.reshape(-1,1),T2.reshape(-1,1)))  # Columns of theta tuple
-    p = prior.reshape(-1,)  # Prior as the probability to draw 
+    p = bayes.reshape(-1,)  # Prior as the probability to draw 
     thetaInd = np.random.choice(np.arange(len(T)), None, p=p/np.sum(p))
     # Observations
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11,4))
-    ax1.imshow(prior,cmap='YlGnBu',extent=[-5,5,-5,5])
+    ax1.imshow(bayes,cmap='YlGnBu',extent=[-5,5,-5,5])
     point, = ax1.plot(T[thetaInd][0], T[thetaInd][1], 'r.', markersize=15)
     ax1.set_xlabel('θ1')
     ax1.set_ylabel('θ2')
-    # Likelihood
-    line, = ax2.plot(true_x, T[thetaInd][0]+T[thetaInd][1]*true_x,'g--')
+    
+    # Distribution
+    #'''
+    # This is only for posterior model distribution
+    trans = bayes/bayes.max()  # Visualizing posteriror distribution of model line transparency    
+    # Iteration over all possible thetas
+    for row in range(10, 60):  #T1.shape[0]):  # Theta indices
+        for col in range(40,90):  #T1.shape[1]):
+            # Each [theta1, theta2] along with possibility as transparency
+            ax2.plot(true_x, T1[row,col]+T2[row,col]*true_x,'c-', alpha=trans[row,col]*0.6)
+    #'''
+    
+    line, = ax2.plot(true_x, T[thetaInd][0]+T[thetaInd][1]*true_x,'k--')
+    ax2.plot(obs_x,obs_y,'ko')
     ax2.set_xlim([-5.,5.])
     ax2.set_ylim([-7.5,12.5])
     ax2.set_xlabel('x')
@@ -93,7 +114,7 @@ def plotPriorDraw(T1, T2, prior, true_x):
         line.set_ydata(T[thetaInd][0]+T[thetaInd][1]*true_x)
     
     ani = FuncAnimation(fig, update, frames=np.arange(0, 100), interval=100)
-    ani.save('2_priorDraw.gif', dpi=400, writer='imagemagick')
+    ani.save('5_postDraw.gif', PillowWriter(fps=20))  # dpi=400, writer='imagemagick')
     
 # Function for visualizing posterior with different number of observations
 def plotObsPost(T1, T2, obs_x, obs_y, true_x, true_y):
@@ -135,11 +156,12 @@ def plotObsPost(T1, T2, obs_x, obs_y, true_x, true_y):
 #####################################################
 
 # Ground truth and noisy observations
-obs_x = np.random.rand(15)[:,None]; obs_x = obs_x*10-5  # Draw n noisy observations in [-4,4]
-obs_y = linearF(obs_x) + np.random.randn(len(obs_x),1)*1.0
+n = 5  # Number of observations
+obs_x = np.random.rand(n)[:,None]; obs_x = obs_x*10-5  # Draw n noisy observations in [-4,4]
+obs_y = linearF(obs_x, 3, 2) + np.random.randn(len(obs_x),1)*1.0  # f(x) = 3 + 2x + e
 
-true_x = np.arange(-5.0,5.1,0.1)  # Ground truth data showing the linear function
-true_y = linearF(true_x)
+true_x = np.arange(-5.0,5.1,0.005)  # Ground truth data showing the linear function
+true_y = linearF(true_x, 3, 2)
 
 # Visualize ground truth data and noisy observation
 plt.plot(obs_x,obs_y,'ko',true_x,true_y,'g--')
@@ -162,14 +184,45 @@ T1,T2 = meshgrid(theta1, theta2) # grid of point
 
 # Loop over number of observations
 likelihood = 1
-for k in range(3):  #(len(obs_y)):
+for k in range(5):  #(len(obs_y)):
     prior = pri(T1,T2) 
-    likelihood *= likeli(T1, T2, obs_y[k], obs_x[k]) # evaluation of the function on the grid
-    posterior = prior*likelihood
+    likelihood *= likeli(T1, T2, obs_y[k], obs_x[k]) # evaluation of the function on the grid    
+    posterior = post(prior, likelihood)
     
 
 #####################################################
-# 04 Visualization
+# 04 Prediction
+#####################################################
+
+# Using a discrete simulation of integration
+# Simulate each potential function by enumaerate all thetas
+# Combine all potential functions by using the posterior distribution of thetas
+# Define X, Y space for visualizing posteriori of Y=f(x)+e
+xx = np.arange(-5.0,5.1,0.1)
+yy = np.arange(-7.5,12.5,0.1)
+yy = yy[::-1]  # minimum value from lowerleft corner
+X,Y = meshgrid(xx, yy) # grid of point
+
+'''
+trans = posterior/posterior.max()  # Visualizing posteriror distribution of model line transparency
+
+fig, ax = plt.subplots(figsize=(6,4))  # Set figure
+ax.set_xlim([-5.,5.])
+ax.set_ylim([-7.5,12.5])
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+plt.tight_layout()
+
+# Iteration over all possible thetas
+for row in range(T1.shape[0]):  # Theta indices
+    for col in range(T1.shape[1]):
+        # Each [theta1, theta2] along with possibility as transparency
+        ax.plot(true_x, T1[row,col]+T2[row,col]*true_x,'g--', alpha=trans[row,col])
+'''
+
+
+#####################################################
+# 05 Visualization
 #####################################################
 
 # Visualization in 2D
@@ -180,10 +233,12 @@ plt.imshow(prior,cmap='YlGnBu',extent=[-5,5,-5,5])
 plt.xlabel('θ1')
 plt.ylabel('θ2')
 # Animation of prior draw
-plotPriorDraw(T1, T2, prior, true_x)
+plotBayesDraw(T1, T2, prior, true_x)
 # Posterior
 plt.imshow(posterior,cmap='YlGnBu',extent=[-5,5,-5,5])
 plotObsPost(T1, T2, obs_x, obs_y, true_x, true_y)
+# Animation of posterior draw
+plotBayesDraw(T1, T2, posterior, true_x)
 #im = imshow(posterior,cmap='YlOrRd') # drawing the function
 #colorbar(im) # adding the colobar on the right
 #show()
