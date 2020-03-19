@@ -1,34 +1,39 @@
-# Bayesian linear regression animated
+# Bayesian linear regression animated (unfinished)
+<div>
+For educational and practical purposes
+</div>
+
 -------------------
-###### Credit to this tutorial can be assigned as:
+###### Credit to this tutorial can be given as:
 ```
-J. Wang, Bayes_for_Regression, (2020), GitHub repository, https://github.com/wonjohn/Bayes_for_Regression
+J. Wang, Bayesian linear regression animated, (2020), GitHub repository, https://github.com/wonjohn/Bayes_for_Regression
 ```
-Short recap
+## Recap of linear regression in frequentist view
 -------------------
-_Bayesian epistemology_ introduces important constraints on top of rational degrees of belief and a rule of probabilistic inference--the principle of conditionalization, according to [William Talbott, 2008](https://plato.stanford.edu/entries/epistemology-bayesian/).
+In the case of _linear regression_, without any consideration of probabilistic confidence, conventional linear regression only achieves point estimation of the model parameter through _least squares_ method. The _least squares_ holds a frequentist view to exclusively rely on data observation and comes back with a _point estimation_ of the model parameters. The _least squares_ appears to be not a bad idea in the first place as we could be able to obtain exact model form and thus predictions.
 
-_Bayesian statistics_ forms a major branch in _statistics_. _Bayesian statistics_ relies on Bayesian principle to reveal a beautiful epistemology scheme through probabilistic inference: one should rationally updates degrees of knowing or belief once new evidence is observed. Mathematically, it is denoted as:
-
-_**P(S|E) = P(E|S)P(S)/P(E)**_
-
-where, _**s**_ can be any arbitrary statement, and _**E**_ is observed evidence(s). Without observing any evidence, it is rational to stay with idealized belief denoted as the _prior_ belief _**P(s)**_. But if we have observed an evidence, there is something we can do to update our belief. One option is to utilize the measurement called the _likelihood_ function that quantifies how our _prior_ belief should manifest the evidence at hand. The _likelihood_ function _**P(E|S)**_ together with the _prior_ function _**P(S)**_ help to update our belief once there is more information from the reality. The updated belief is called the _posterior_ function of _**S**_, which is _**P(S|E)**_.
-
-In this small snippet of experiment, the principle of _Bayesian statistics_ is showcased through a prevalent prediction problem: _regression_.
-
-Showcase
--------------------
-### * Linear regression formalization
-In the simplest case of _univariate linear regression_, the ultimate goal is to find out the true model with the highest confidence so that we can make confident predictions by using the model.
-
-Without considerting the confidence, conventional linear regression only achieves point estimation of the model parameter through _least squares_ method, which is not a bad idea as we could be able to obtain exact prediction by using the model. But in reality, we also would like to know how certain it can be for predition with the model at hand. In many practical cases, such as predicting housing values, stock values, pollution concentration, soil mineral distribution, etc., apart from the estimation, we also prefer to see the confidence of our model performance so as to control the risk of making the prediction or any possible economic loss. Such preference leads to natural transition from point estimation of the model parameter to a probabilistic perpective, and paves the way to the application of _Bayesian statistics_.
-
-### * Bayesian inference
-Take the following _univariate linear regression_ problem for example, _Bayesian statistics_ attempt to find out the true model and with quantified confidence simultaneously. Visually, _Bayesian statistics_ tries to figure out the true form of the unobserved linear model (linear parameters) in Fig.1 through few point observations (points in this example).
+Take the simplest case of _univariate linear regression_ problem for example, given the noisy observations are coming from an true underlying linear model plus some noise (Fig.1), frequentists attempt to recover this underlying model by starting with an assumption that the observations suffer from _Gaussian_ noise. It means that the noise follows a _Gaussian_ distribution around the underlying model. In short, the noise is symmetrical with respect to the true model and should add up to zero. So frequentists believe that the _least squares_ is a proper way as it searches the true model by minimizing the difference between its inference and the observations.
 
 <p align="center"><img src="/img/0_data.png" width="450" heigth="390"></p>
 
 <p align="center">_Fig.1 Linear regression problem setting._</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+_Bayesian statistics_ attempt to find out the true model and with quantified confidence simultaneously. Visually, _Bayesian statistics_ tries to figure out the true form of the unobserved linear model (linear parameters) in Fig.1 through few point observations (points in this example).
+
+
 
 Here in Fig.1 I intentionally reveal the true linear function as a line so that we can compare how _Bayesian statistics_ help us to recover the true model only from limited observations. The true _univariate linear_ model I used here is:
 
@@ -45,6 +50,44 @@ _**M(X) = θ<sup>T</sup>X**_
 where _**X**_ is _[1, x]<sup>T</sup>_ and _**θ**_ is _[θ<sub>1</sub>, θ<sub>2</sub>]<sup>T</sup>_. Unfortunately, like I said, in most cases, we only have noisy observations _**Y**_ such as _**(y<sub>1</sub>, y<sub>2</sub>, ... , y<sub>n</sub>)**_ with preferable _Gaussian_ distributed noises _**ε**_ around the true model, in the form of:
 
 _**Y = θ<sup>T</sup>X + ε**_
+
+
+
+
+
+
+But in reality, we also would like to know how certain it can be for prediction with the model at hand. In many practical cases, such as predicting housing values, stock values, pollution concentration, soil mineral distribution, etc., apart from the estimation, we also prefer to see the confidence of our model performance so as to control the risk of making the prediction or any possible economic loss. Such preference leads to natural transition from point estimation of the model parameter to a probabilistic perspective, and paves the way to the application of _Bayesian statistics_.
+
+
+
+
+
+
+
+
+
+
+
+the ultimate goal is to find out the true model with the highest confidence so that we can make confident predictions by using the model.
+
+
+
+
+_Bayesian epistemology_ introduces important constraints on top of rational degrees of belief and a rule of probabilistic inference--the principle of conditionalization, according to [William Talbott, 2008](https://plato.stanford.edu/entries/epistemology-bayesian/).
+
+_Bayesian statistics_ forms a major branch in _statistics_. _Bayesian statistics_ relies on Bayesian principle to reveal a beautiful epistemology scheme through probabilistic inference: one should rationally updates degrees of knowing or belief once new evidence is observed. Mathematically, it is denoted as:
+
+_**P(S|E) = P(E|S)P(S)/P(E)**_
+
+where, _**s**_ can be any arbitrary statement, and _**E**_ is observed evidence(s). Without observing any evidence, it is rational to stay with idealized belief denoted as the _prior_ belief _**P(s)**_. But if we have observed an evidence, there is something we can do to update our belief. One option is to utilize the measurement called the _likelihood_ function that quantifies how our _prior_ belief should manifest the evidence at hand. The _likelihood_ function _**P(E|S)**_ together with the _prior_ function _**P(S)**_ help to update our belief once there is more information from the reality. The updated belief is called the _posterior_ function of _**S**_, which is _**P(S|E)**_.
+
+In this small snippet of experiment, the principle of _Bayesian statistics_ is showcased through a prevalent prediction problem: _regression_.
+
+## Bayesian inference
+-------------------
+
+
+
 
 As being seen in Fig.1, there are 3 observations available for us to find out the model parameters _**θ**_. According to the _Bayesian principle_, the inference of the model parameter can be achieved through:
 
@@ -130,9 +173,9 @@ Apart from the _prior_ specification, it should NOT be a worse case where we hav
 
 <p align="center">_Fig.8 Change of posterior distribution/function for model parameters along with increasing observations._</p>
 
-Holding the _posterior_ at hand, we now have a more concentrated distribution of the model parameters. The final distribution of the _**θ**_ in the _[θ<sub>1</sub> , θ<sub>2</sub>]<sup>T</sup>_ space, as shown in Fig.8 is confidently centering the point _[3 , 2]_, while still shows possibility of parameters such as _[2.5 , 2]_. This probabilistic perspective is nice as the solution of the parameter is optimal at _[3 , 2]_, we are not rejecting other possibilities without knowing how the qualities of the observations are disturbed by those random noises.
+Holding the _posterior_ at hand, we now have a more concentrated distribution of the model parameters. The final distribution of the _**θ**_ in the _[θ<sub>1</sub> , θ<sub>2</sub>]<sup>T</sup>_ space, as shown in Fig.8 is confidently centering the point _[3 , 2]_, while still shows possibility of parameters such as _[2.5 , 2]_. This probabilistic perspective is nice as the solution of the parameter is optimal at _[3 , 2]_, we are not rejecting other possibilities without knowing how the qualities of the observations are disturbed by those random noises. We have few options to deal with this _posterior_. Similar to maximizing the _likelihood_, we can seek the maximum-a-posteriori (_**MAP**_) probability to achieve the optimal model parameters. We can also stay with the probability distribution to quantify confidence of prediction.
 
-Since it is a probability distribution in the _posterior_, it means we can sample from this distribution for visualization. As shown in Fig.9, drawn from the distribution, many samples are very close to _[3 , 2]_ with few are bit far away from the center of the distribution. In the _[X , Y]_ space, the drawn samples seems to be wobbling around a potential "datum line". This "datum line" is in fact _**M(x) = 3 + 2x**_. Apparently, the sample lines are corresponding to the probability of drawn _[θ<sub>1</sub> , θ<sub>2</sub>]<sup>T</sup>_, thus we can encode this probability of _**θ**_ to the lines, namely the inferred linear model. It then forms a probability distribution of potential linear models in the _[X , Y]_ space and can be visualized as shadow to the right of Fig.9.
+Since it is a probability distribution in the _posterior_, it means sampling is possible from this distribution for visualization. As shown in Fig.9, drawn from the distribution, many samples are very close to _[3 , 2]_ with few are bit far away from the center of the distribution. In the _[X , Y]_ space, the drawn samples seems to be wobbling around a potential "datum line". This "datum line" is in fact _**M(x) = 3 + 2x**_. Apparently, the sample lines are corresponding to the probability of drawn _[θ<sub>1</sub> , θ<sub>2</sub>]<sup>T</sup>_, thus we can encode this probability of _**θ**_ to the lines, namely the inferred linear model. It then forms a probability distribution of potential linear models in the _[X , Y]_ space and can be visualized as shadow to the right of Fig.9.
 
 <p align="center"><img src="/img/5_postDraw.gif" width="800" heigth="680"></p>
 
@@ -142,11 +185,12 @@ The shadow defines an import confidence interval for making predictions: given a
 
 _**P(D<sub>new</sub>|D) = ʃ P(D<sub>new</sub>|θ,D)P(θ|D)dθ**_
 
-which is exactly how Fig.9 is plotted. The shadow is a combination of possible linear model weighted by their possibilities.
+which is exactly how Fig.9 is plotted. The shadow is a combination of possible linear model weighted by their possibilities. The equation above also speaks the same idea: the _posterior_ considers all possible _**θ**_, which means the _posterior_ does NOT care about the exact _**θ**_! The integration plays a beautiful role to manifest such contradictory that all _**θ**_ are involved (considered), but then are integrated out (does NOT care)!
 
 
-- MAP
+
 - one leftover: normalization term
+- parameter estimation
 - existing packages for realizing Bayesian inference
 - mathematical solutions are more handy (from measuring the width of the posterior linear model distribution)
 
