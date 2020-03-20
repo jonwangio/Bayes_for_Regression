@@ -16,7 +16,11 @@ Take the simplest case of _univariate linear regression_ problem for example, gi
 
 <p align="center"><img src="/img/0_data.png" width="450" heigth="390"></p>
 
-<p align="center">_Fig.1 Linear regression problem setting._</p>
+_<p align="center">Fig.1 Linear regression problem setting.</p>_
+
+Here in Fig.1 I the true linear function is intentionally revealed as a line so that we can compare how _least squares_ help us to recover the true model from few observations. The true _univariate linear_ model I used here is:
+
+_<p align="center">**M(x) = 3 + 2x**</p>_
 
 
 
@@ -24,6 +28,9 @@ Take the simplest case of _univariate linear regression_ problem for example, gi
 
 
 
+<p align="center"><img src="/img/0_sampleOLS.gif" width="450" heigth="390"></p>
+
+_<p align="center">Fig.2 Sample least squares solutions.</p>_
 
 
 
@@ -35,9 +42,7 @@ _Bayesian statistics_ attempt to find out the true model and with quantified con
 
 
 
-Here in Fig.1 I intentionally reveal the true linear function as a line so that we can compare how _Bayesian statistics_ help us to recover the true model only from limited observations. The true _univariate linear_ model I used here is:
 
-_**M(x) = 3 + 2x**_
 
 Mathematically, without knowing the true model parameters _**3**_(for the interception) and _**2**_(for the slope), Bayesian statistics_ would quantify _θ<sub>1</sub>_ and _θ<sub>12</sub>_ for the model:
 
