@@ -29,6 +29,8 @@ from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
 from matplotlib.animation import FuncAnimation, PillowWriter
+from scipy import stats
+
 
 #####################################################
 # 01 Functions for prior, likelihood, and visualization
@@ -38,6 +40,39 @@ from matplotlib.animation import FuncAnimation, PillowWriter
 def linearF(x, theta1, theta2):  # A very simple univariate linear model
     func = theta1 + theta2*x  # f(x)
     return func
+
+# Plot sample Ordinary Least Square (OLS) fits
+def plotSampleOLS(true_x, n):    
+    obs_x = np.random.rand(n); obs_x = obs_x*10-5  # Draw n noisy observations in [-4,4]
+    obs_y = linearF(obs_x, 3, 2) + np.random.randn(len(obs_x))*1.0  # f(x) = 3 + 2x + e
+    true_y = linearF(true_x, 3, 2)
+    # Linear fit using OLS
+    r = stats.linregress(obs_x, obs_y)
+    
+    # Plot
+    fig, ax = plt.subplots(figsize=(6,4))
+    ax.plot(true_x,true_y,'g--')
+    line, = ax.plot(true_x, linearF(true_x, r.intercept, r.slope), 'c-', linewidth=1)
+    point, = ax.plot(obs_x, obs_y, 'ko')
+    ax.legend(['true','fit','observed'], loc=0)
+    ax.set_xlim([-5.,5.])
+    ax.set_ylim([-7.5,12.5])
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    plt.tight_layout()
+    
+    def update(i):
+        # Another set of observations
+        obs_x = np.random.rand(n); obs_x = obs_x*10-5  # Draw n noisy observations in [-4,4]
+        obs_y = linearF(obs_x, 3, 2) + np.random.randn(len(obs_x))*1.0  # f(x) = 3 + 2x + e
+        r = stats.linregress(obs_x, obs_y)  # Another fit
+        point.set_data(obs_x, obs_y)
+        line.set_ydata(linearF(true_x, r.intercept, r.slope))
+    
+    ani = FuncAnimation(fig, update, frames=np.arange(0, 50), interval=1)
+    ani.save('0_sampleOLS.gif', PillowWriter(fps=5))  # dpi=400, writer='imagemagick')
+    
+    return None
 
 # Prior function for a simple linear model with only a interception and a slope
 def pri(theta1,theta2):
@@ -156,9 +191,9 @@ def plotObsPost(T1, T2, obs_x, obs_y, true_x, true_y):
 #####################################################
 
 # Ground truth and noisy observations
-n = 5  # Number of observations
-obs_x = np.random.rand(n)[:,None]; obs_x = obs_x*10-5  # Draw n noisy observations in [-4,4]
-obs_y = linearF(obs_x, 3, 2) + np.random.randn(len(obs_x),1)*1.0  # f(x) = 3 + 2x + e
+n = 3  # Number of observations
+obs_x = np.random.rand(n); obs_x = obs_x*10-5  # Draw n noisy observations in [-4,4]
+obs_y = linearF(obs_x, 3, 2) + np.random.randn(len(obs_x))*1.0  # f(x) = 3 + 2x + e
 
 true_x = np.arange(-5.0,5.1,0.005)  # Ground truth data showing the linear function
 true_y = linearF(true_x, 3, 2)
