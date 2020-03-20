@@ -28,7 +28,7 @@ _<p align="center">**M(x) = 3 + 2x**</p>_
 
 
 
-<p align="center"><img src="/img/0_sampleOLS.gif" width="450" heigth="390"></p>
+<p align="center"><img src="/img/0_sampleOLS.gif" width="410" heigth="350"></p>
 
 _<p align="center">Fig.2 Sample least squares solutions.</p>_
 
