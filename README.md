@@ -50,7 +50,7 @@ _<p align="center">**Y = θ<sup>T</sup>X + ε**</p>_
 
 where the noises are preferably _Gaussian_ distributed noises around the true model. Then, can we really expect conventional methods such as the _least squares_ to find or approximate the true value of _[θ<sub>1</sub>, θ<sub>2</sub>]<sup>T</sup>_, which are _3_ and _2_ for the intercept and slope, respectively? We will stick to only three observations each time as shown in Fig.1, and intentionally create observations with _Gaussian_ noises to test the _least squares_ for several trials. Well, even with only three observations, the _least squares_ works fine to find linear models by minimizing their difference from the observations as shown in Fig.2 below.
 
-<p align="center"><img src="/img/0_sampleOLS.gif" width="410" height="350"></p>
+<p align="center"><img src="/img/0_sampleOLS.gif" width="420" height="300"></p>
 
 _<p align="center">Fig.2 Sample least squares solutions.</p>_
 
