@@ -1,7 +1,8 @@
-# Bayesian linear regression animated (unfinished)
-<div>
-For educational and practical purposes
-</div>
+# Bayesian linear regression animated
+
+##### This is a tutorial for understanding the rationale of Bayesian statistics in linear regression.
+
+##### The purpose of the tutorial is to show the mechanisms of _Bayesian statistics_ in an intuitive manner, mainly through general notations, graphics, and animations, without diving into the details of mathematical procedures.
 
 -------------------
 ###### Credit to this work can be given as:
@@ -19,7 +20,7 @@ _**P(S|E) = P(E|S)P(S)/P(E)**_
 
 where, _**s**_ can be any arbitrary statement, and _**E**_ is observed evidence(s). Without observing any evidence, it is rational to stay with idealized belief denoted as the _prior_ belief _**P(s)**_. But if we have observed an evidence, there is something we can do to update our belief. One option is to utilize the measurement called the _likelihood_ function that quantifies how our _prior_ belief should manifest the evidence at hand. The _likelihood_ function _**P(E|S)**_ together with the _prior_ function _**P(S)**_ help to update our belief once there is more information from the reality. The updated belief is called the _posterior_ function of _**S**_, which is _**P(S|E)**_.
 
-In this small snippet of experiment, the principle of _Bayesian statistics_ is showcased through a prevalent prediction problem: _linear regression_.
+In this small snippet of tutorial, the principle of _Bayesian statistics_ is showcased through a prevalent prediction problem: _linear regression_.
 
 
 ## Recap of linear regression in frequentist view
@@ -74,14 +75,14 @@ _<p align="center">**P(θ|D) = P(D|θ)P(θ)/P(D)**</p>_
 
 where _**D**_, collection of noisy observations, becomes our evidence. In Fig.1, there are 3 observations available for us to find out the model parameters _**θ**_. We can denote observations points as collection of tuples _**{(x<sub>1</sub>, y<sub>1</sub>), (x<sub>2</sub>, y<sub>2</sub>), (x<sub>3</sub>, y<sub>3</sub>)}**_. _**P(θ|D)**_ is called the _posterior_ distribution of _**θ**_ as it is a distribution after we updating our knowledge by seeing data as evidence. The _posterior_ is determined by the terms on the right-hand side of the equation. _**P(D|θ)**_ is the _likelihood_ function that quantifying the probability of the observations produced by some model governed by parameters _**θ**_. _**P(θ)**_ is the _prior_ distribution of _**θ**_ encoding our knowledge of parameters before making any observations. How could it be possible to know anything about _**θ**_ before seeing any data? Well, in most practical cases, we do have some ideas: the relationships between precipitation and soil loss, traffic volume and road pollution, location and land price, etc...We more or less know the general range of _**θ**_, or its sign, at least. _**P(D)**_ is a normalization term that makes the right-hand side of the equation a true probabilistic distribution that integrated to 1.
 
-If we stay simple enough in this experiment, we can temporarily ignore the normalization term _**P(D)**_. Now,  in order to quantify the _posterior_ _**P(θ|D)**_, the problem reduces to specify the _likelihood_ _**P(D|θ)**_ and _prior_ _**P(θ)**_, which has been mentioned at the beginning of this section as important probabilities.
+If we stay simple enough in this tutorial, we can temporarily ignore the normalization term _**P(D)**_. Now,  in order to quantify the _posterior_ _**P(θ|D)**_, the problem reduces to specify the _likelihood_ _**P(D|θ)**_ and _prior_ _**P(θ)**_, which has been mentioned at the beginning of this section as important probabilities.
 
 
 ### Bayesian function specification: _likelihood_
 
 For any single observed data point _**(x<sub>k</sub>, y<sub>k</sub>)**_, the _likelihood_ measures the probability of the model parameter _**θ**_ gives rise to this known data point. Thus, _given_ any possible _**θ**_, how likely it is to observe this particular point of tuple _**(x<sub>k</sub> , y<sub>k</sub>)**_? Referring above to the noisy observation from the linear model, by saying we have observations with noise _**ε**_ around the true model, it is most handy to impose a _Gaussian_ distribution over the noise around the true model. In short, the _likelihood_ of observing the tuple _**(x<sub>k</sub> , y<sub>k</sub>)**_ follows a _Gaussian_ distribution around the model specified by _**θ**_:
 
-_<p align="center">**P(D|θ) = P((x<sub>k</sub> , y<sub>k</sub>)|θ) ~ N(y<sub>k</sub> ; θ<sup>T</sup>X, ε)**</p>_
+_<p align="center">**P(D|θ) = P(y<sub>k</sub>|x<sub>k</sub> , θ) ~ N(y<sub>k</sub> ; θ<sup>T</sup>X, ε)**</p>_
 
 This _Gaussian_ form _likelihood_ can be easily implemented as a function in _python_ as:
 
@@ -113,7 +114,7 @@ At this point, it is no surprising that why the [_**Maximum Likelihood Estimatio
 
 Different from that _likelihood_ can be delineated from observed information, choosing _prior_ function for _Bayesian_ inference is tricky. It is called _prior_ distribution because it requires us to configure the distribution of the model parameters _prior_ to seeing any data, or based upon our _prior_ knowledge with regard to the parameters. Fortunately, in several situation, we DO have such prior knowledge when building a regression model. For instance, if someone is interested in the loss of a particular type of soil _**(y<sub>k</sub>)**_ due to rainfall _**(x<sub>k</sub>)**_ in a region, it is already handy to know that there should be a positive relationship between _**(y<sub>k</sub>)**_ and _**(x<sub>k</sub>)**_. It also means that we can more or less _constrain_ the _**θ**_ to be positive. Or, maybe someone has already done similar work in other places and brought some confident results, it is even possible to further _constrain_ the _**θ**_ to be a probabilistic distribution over these available results (values).
 
-But here in this experiment, although it is a simple linear regression example, we are running into a awkward situation: nothing is availabe except the observations to make inference about the model. This is where one has to rely on _improper_ or _non-informative_ _prior_ distribution for the model parameters. These keywords such as _improper_ and _non-informative_ indicate that the design of the _prior_ function is entirely arbitrary. One option is to make _**P(θ)=1**_, thus it is _non-informative_ and will have no effect over the _posterior_ when multplies with the _likelihood_. Another option is to make a general assumption that _**P(θ)**_ follows some well formed statistical distribution, such as _Gaussian_ distribution shown in Fig.5 below. This kind of specification can be _improper_ as it would potentially impose limited and unreasonable assumption that _**θ**_ is normally distributed around _**0**_.
+But here in this tutorial, although it is a simple linear regression example, we are running into a awkward situation: nothing is availabe except the observations to make inference about the model. This is where one has to rely on _improper_ or _non-informative_ _prior_ distribution for the model parameters. These keywords such as _improper_ and _non-informative_ indicate that the design of the _prior_ function is entirely arbitrary. One option is to make _**P(θ)=1**_, thus it is _non-informative_ and will have no effect over the _posterior_ when multplies with the _likelihood_. Another option is to make a general assumption that _**P(θ)**_ follows some well formed statistical distribution, such as _Gaussian_ distribution shown in Fig.5 below. This kind of specification can be _improper_ as it would potentially impose limited and unreasonable assumption that _**θ**_ is normally distributed around _**0**_.
 
 <p align="center"><img src="/img/2_prior.png" width="380" heigth="380"></p>
 
@@ -131,7 +132,7 @@ Since we know that the true model parameters, plus that we also know that the tr
 
 The effect of this _improper Gaussian prior_ combined with the _likelihood_ can be visualized as in Fig.7 below. The combination, again, follows the principle of joint statistical distribution, is achieved through multiplication. The resultant _posterior_ distribution of the model parameter _**θ**_ is compared with their _likelihood_ distribution solely determined by observed evidences.
 
-In _Bayesian statistics_, this multiplication is normally referred as _update_ as mentioned at the beginning of this experiment, where the _prior_ knowledge is _updated_ by the _likelihood_ brought by observations. Equivalently, I could also say that the _likelihood_ is being _shifted_ or _dragged_ by our _prior_ belief, because our _prior_ belief imposes a constraint even we have observed few evidence.
+In _Bayesian statistics_, this multiplication is normally referred as _update_ as mentioned at the beginning of this tutorial, where the _prior_ knowledge is _updated_ by the _likelihood_ brought by observations. Equivalently, I could also say that the _likelihood_ is being _shifted_ or _dragged_ by our _prior_ belief, because our _prior_ belief imposes a constraint even we have observed few evidence.
 
 Although it seems like the _posterior_ distribution of _**θ**_ obtained by combining its _likelihood_ and _improper prior_ is acceptable in the first place, not too prominently, the _improperness_ of the _improper prior_ in this case is still highlighted as we already know that the _likelihood_ is perfectly centered around the true parameter values of _**[3, 2]**_, and now it is _shifted_ away. But we would never notice this in practice as we wouldn't know the true model parameters. One can see that the direction of the _shifting likelihood_ is towards the _prior_. But as it is a multiplication, the _shift_ is not quite intense. The multiplication combines the large value in both _prior_ and _likelihood_, thus the _shift_ is along the gentle gradient of the _likelihood_ while moving towards the _prior_. The major reason that the _posterior_ is not too far away shifted from the _likelihood_ is that the _improper prior_ is relatively "flat", whereas the distribution rendered by the _likelihood_ is strongly centered. So, the resultant multiplication would largely driven by the _likelihood_.
 
@@ -172,16 +173,37 @@ _**P(D<sub>new</sub>|D) = ʃ P(D<sub>new</sub>|θ,D)P(θ|D)dθ**_
 which is exactly how Fig.10 is plotted. The shadow is a combination of possible linear model weighted by their possibilities. The equation above also speaks the same idea: the _posterior_ considers all possible _**θ**_, which means the _posterior_ does NOT care about the exact _**θ**_! The integration plays a beautiful role to manifest such contradictory that all _**θ**_ are involved (considered), but then are integrated out (does NOT care)!
 
 
+## Wrap-up
+-------------------
+So far we have been stay intuitively by using general notations (such as _**P(θ)**_), graphics and animations. In order to obtain exact measurement of the distribution regarding the _likelihood_, _prior_, and _posterior_, we can explicitly quantify the distributions by using hyper-parameters, for instance:
+- _**P(θ) = P(θ|α) ~ N(θ ; 0, α<sup>-1</sup>I)**_ for the _prior_, where _**α**_ is the hyper-parameter controlling the shape of probabilistic distribution;
+- _**P(D|θ) = P(y<sub>k</sub>|x<sub>k</sub> , θ, β) ~ N(y<sub>k</sub> ; θ<sup>T</sup>X, β<sup>-1</sup>I)**_, where _**β**_ is another hyper-parameter of precision (inverse variance) controlling the noise intensity as _**ε ~ N(ε ; 0, β<sup>-1</sup>I)**_;
+- we can even have design function _**φ**_ for _**φ(x)=1+x**_.
 
-- parameter estimation
-- existing packages for realizing Bayesian inference
-- mathematical solutions are more handy (from measuring the width of the posterior linear model distribution)
+If we can be able to specify the hyper-parameters, the _posterior_ is measurable, visually, the _width_ and _center_ of the shadow in Fig.10 is to be a function of hyper-parameters _**α**_ and _**β**_. These hyper-parameters can also be obtained automatically! The approach is called maximizing the _marginal likelihood_ through [_**Empirical Bayes method**_](https://en.wikipedia.org/wiki/Empirical_Bayes_method), which will not be covered in this tutorial.
 
-### * Remarks
-- MLE can be enough
-- model selection vs. likelihood specification: likelihood in essence only specifies model parameter distribution
-- great property of Gaussian: multiply
-- informative vs. non-informative prior
-- Bayesian framework: ecapsulate many special cases such as _least squares_ when Gaussian is assumed, and prior relates to regularization
-- function space vs. parameter space
-- feature space discussion
+After digesting the mechanisms of the _Bayesian statistics_ in linear regression, you are ready to leverage existing packages without bothering too much to write your own code. As long as you understand what does it mean by _likelihood_, _prior_, _posterior_ and the role of those hyper-parameters, you can simple do as follows:
+
+```python
+from bayesian_linear_regression_util import *
+```
+If you do wish to specify your own _Bayesian_ distributions for any parameters, say _**θ**_, you can leverage [`PyMC3`](https://docs.pymc.io/) as:
+
+```python
+import pymc3 as pm
+with pm.Model() as model:
+    μ = pm.Uniform('μ', lower=0, upper=300)
+    σ = pm.HalfNormal('σ', sd=10)
+    θ = pm.Normal('θ', mu=μ, sd=σ, observed=data['price'].values)
+    trace = pm.sample(1000, tune=1000)
+```
+
+
+## Takeaways
+-------------------
+Few takeaways after digesting this tutorial:
+- many distributions specified for _Bayesian_ linear regression are _Gaussian_ because of its nice property in conditioning, multiplication, etc.;
+- maximum-likelihood-estimation (MLE) can be reliable if enough observations are made, but quite vulnerable to limited ones, which leads to a phenomenon of [_overfitting_](https://en.wikipedia.org/wiki/Overfitting) if someone is interested in the details;
+- even the _improper_ or _non-informative_ _prior_ functions are confusing with limited domain knowledge, they play a useful role mathematically and build the connection to an important regression strategy: _regularization_;
+- although specifying the _prior_ is sometimes referred as model selection, it is essentially specify the parameters of model, the assumption of the model as linear or non-linear is still arbitrary;
+- for further interest: specifying the design function _**φ**_ for the design function _**x**_ can be related to kernel tricks and paves the way to [_**non-parametric modeling**_](https://en.wikipedia.org/wiki/Nonparametric_regression).
